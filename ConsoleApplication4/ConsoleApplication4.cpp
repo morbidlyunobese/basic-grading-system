@@ -1,58 +1,63 @@
 #include <iostream>
 #include <string>
 
-// Student Grading Program
-
-void gradeSubject(char grades[], int size, std::string subject)
-{
-	char grade;
-
-	std::cout << "Enter grade: ";
-	std::cin >> grade;
-	grade = toupper(grade);
-
-	for (int i = 0; i < size; i++) {
-
-		if (grade == grades[i]) {
-			std::cout << subject << " has been graded as: " << grade;
-			std::cout << '\n';
-			break;
-		}
-		else {
-			std::cout << "Invalid grade.";
-			break;
-		}
-	}
-	
-}
+// Student Grading System
 
 int main() {
 
-	std::string studentName;
-	std::string* pName = &studentName;
+    // variables
+    int students;
+    char grade = ' ';
+    std::string subject;
 
-	std::string subjects[4] = { "Math", "Science", "English", "History" };
-	int size = sizeof(subjects) / sizeof(subjects[0]);
-	std::string subject;
+    // arrays
+    std::string subjects[4] = { " Math", "Science", " History", "Enlish" };
+    char grades[5] = { 'A', 'B', 'C', 'D', 'F' };
+    std::string* pStudents = NULL;
 
-	char grades[5] = { 'A','B','C','D','F' };
-	int allGrades = sizeof(grades) / sizeof(grades[0]);
+    std::cout << "How many students are there: ";
+    std::cin >> students;
+    std::cout << '\n';
 
-	std::cout << "Enter the student's first and last name: ";
-	std::getline(std::cin, *pName);
-	std::cout << '\n';
+    std::cout << "Subject?: ";
+    std::cin >> subject;
+    std::cout << '\n';
 
-	std::cout << "Subjects: ";
+    pStudents = new std::string[students];
 
-	for (int i = 0; i < size; i++) {
-		std::cout << subjects[i] << " ";
-	}
 
-	std::cout << '\n';
+    // checking if student count is less than 20
+    if (students < 10) {
+        // indexing array for individual students
+        for (int i = 0; i < students; i++) {
 
-	std::cout << "Enter the subject do you want to grade: ";
-	std::getline(std::cin, subject);
+            std::cout << "Enter student #" << i + 1 << ": ";
+            std::cin >> pStudents[i];
 
-	gradeSubject(grades, size, subject);
+        }
+
+        // grading individual students
+        for (int i = 0; i < students; i++) {
+
+            std::cout << "Enter student " << pStudents[i] << "'s grade: ";
+            std::cin >> grade;
+            grade = toupper(grade);
+
+            if (grade == grades[i]) {
+
+                std::cout << "Student: " << pStudents[i] << " has been given the grade: " << "'" << grade << "'";
+                std::cout << '\n';
+            }
+            else if(!grade) {
+                std::cout << "Invalid grade.";
+            }
+        }
+    }
+    else {
+        std::cout << "Too many students.";
+    }
+
+    // deleting all allocated memory
+    delete[] pStudents;
 
 }
